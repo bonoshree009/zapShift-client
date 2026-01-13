@@ -7,7 +7,8 @@ import { Component } from "react";
 import AboutUs from "../Pages/About/AboutUs";
 import AuthLayout from "../Layouts/AuthLayout";
 import Register from "../Pages/AuthPage/Register";
-import Login from "../Pages/AuthPage/Login";
+import Login from "../Pages/AuthPage/Login.Jsx";
+
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
     Component:AuthLayout,
     children:[
      { path:'/register',Component:Register},
-     { path:'/login',Component:Login},
+     {path:'login' ,Component:Login}
     ]
   }
 ]);

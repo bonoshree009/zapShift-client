@@ -32,9 +32,9 @@ const Navbar = () => {
       {Links}
     </ul>
   </div>
-  <div className="navbar-end text-[10px] md:text-xl ">
-     <Navbar className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</Navbar>
-       <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register">Sign Up</NavLink>
+   <div className="navbar-end text-[10px] md:text-xl ">
+     <NavLink className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</NavLink>
+     <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register">Sign Up</NavLink> 
   </div>
 </div>
 </div>

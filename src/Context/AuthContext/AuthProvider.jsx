@@ -3,6 +3,7 @@ import React from 'react';
 import { auth } from '../../firebase/firebase.init';
 
 const AuthProvider = ({children}) => {
+    
     const registeruser =(email,password)=>{
         return createUserWithEmailAndPassword (auth,email,password)
     }

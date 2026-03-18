@@ -1,11 +1,11 @@
-import React, { use } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import AuthContext from '../../Context/AuthContext'
 
 
 const Register = () => {
     const {register,handleSubmit, formState :{errors} }=useForm()
-     const {registeruser} = use(AuthContext)
+     const {registeruser} = useContext()
 
     const handleform =(data)=>{
         console.log(data)

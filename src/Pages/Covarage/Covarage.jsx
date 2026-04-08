@@ -7,7 +7,7 @@ const Covarage = () => {
     const position = [24.3745,88.6042]
     const areadata = useLoaderData()
     const mapref = useRef()
-    console.log(areadata)
+    //console.log(areadata)
     const handlesearch =(e)=>{
         e.preventDefault();
          const location = e.target.location.value;

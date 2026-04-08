@@ -9,7 +9,7 @@ import { EffectCoverflow, Pagination, Autoplay } from 'swiper/modules';
 
 const Reviwes = ({reviewPromise}) => {
     const reviewPromises= use(reviewPromise)
-     console.log(reviewPromises)
+    // console.log(reviewPromises)
     return (
         <div>
           <div className='flex flex-col justify-center items-center space-y-6 text-center'>

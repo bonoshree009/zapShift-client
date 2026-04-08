@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import AuthContext from '../../Context/AuthContext'
+
 
 
 const Register = () => {

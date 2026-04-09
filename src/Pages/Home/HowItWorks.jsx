@@ -13,7 +13,7 @@ const HowItWorks = () => {
         </h2>
 
        
-        <div className="grid grid-cols-1 md:grid-cols-4  gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
           <div className="p-6 rounded-xl shadow hover:bg-primary transition flex justify-center items-center card">
              <CiDeliveryTruck className="text-5xl text-black mx-auto mb-4" />

@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Logo from '../../Component/Logo/Logo';
 import { NavLink } from 'react-router';
+import { AuthContext } from '../../Context/AuthContext/AuthContext';
 
 const Navbar = () => {
+
+      const {user, logout}= useContext(AuthContext)
+      
+      const handleLogout =()=>{
+        logout().then().catch()
+
+
+      }
        const Links = <>
        <li><NavLink>Services</NavLink></li>
        <li><NavLink to='/covarage'>Coverage</NavLink></li>
@@ -33,8 +42,12 @@ const Navbar = () => {
     </ul>
   </div>
    <div className="navbar-end text-[10px] md:text-xl ">
-     <NavLink className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</NavLink>
-     <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register">Sign Up</NavLink> 
+
+     {
+     !user?<NavLink className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</NavLink> :
+       <NavLink className="btn bg-red-700 ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register" onClick={handleLogout}>Log Out</NavLink>
+      }
+   <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/BeARider">Be A Rider</NavLink>
   </div>
 </div>
 </div>

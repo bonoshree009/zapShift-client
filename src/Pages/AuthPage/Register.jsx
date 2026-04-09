@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
+import { Link } from 'react-router';
+import SocialLogin from './SocialLogin';
+import axios from 'axios';
 
 
 
@@ -9,9 +12,22 @@ const Register = () => {
      const {registeruser} = useContext(AuthContext)
 
     const handleform =(data)=>{
-        console.log(data)
+        console.log(data, data.photo[0])
+        const profileImg = data.phote[0]
+
         registeruser(data.email ,data.password).then(res=> res.user)
-        .then( result => {console.log(result.user)}).catch(error =>{
+        .then( result => {
+            console.log(result.user)
+            const formData = new FormData()
+            formData.append('image', profileImg)
+            const imageApi = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.VITE_ImageBB} `
+            axios.post(imageApi,data)
+            .then(res=>{
+                console.log("after image upload", res.data.data.url)})
+
+
+
+        }).catch(error =>{
             console.log(error)
         })
     }
@@ -19,19 +35,30 @@ const Register = () => {
         <div>
            <form onSubmit={handleSubmit(handleform)}>
             <fieldset className="fieldset">
+                 {/* Email */}
           <label className="label">Email</label>
           <input type="email" className="input" placeholder="Email" {...register("email",{required:true})} />
           {errors.email?.type === 'required' &&  <p className='text-red-500'>Email is requred</p>}
+         
+         {/* photo */}
+         <label className="label">Photo</label>
+          <input type="file" className="file-input file-input-ghost border-2 border-white" placeholder="photo" {...register("file",{required:true})} />
+          {errors.file?.type === 'required' &&  <p className='text-red-500'>photo is requred</p>}
+
+                {/* password */}
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" {...register("password",{required:true, minLength: {
-  value: 6,
-}})}/>
+          <input type="password" className="input" placeholder="Password" {...register("password",{required:true, minLength: { value: 6,}})}/>
           {errors.password?.type === 'required' &&  <p className='text-red-500'>Password must be 6 charecter</p>}
-          <div><a className="link link-hover">Forgot password?</a></div>
-          <button className="btn btn-neutral mt-4">Register</button>
+         
+          <button className="btn btn-neutral mt-4 bg-[#CAEB66] border-none text-[#73863A] font-bold text-2xl w-block">Register
+        
+          </button>
           
         </fieldset>
+                <p>Already have an account?<Link to="/login" className='text-[#73863A] ml-3'>Login</Link></p>
+        
            </form>
+           <SocialLogin></SocialLogin>
 
         </div>
     );

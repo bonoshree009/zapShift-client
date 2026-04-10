@@ -20,12 +20,15 @@ const Register = () => {
             console.log(result.user)
             const formData = new FormData()
             formData.append('image', profileImg)
-            const imageApi = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.VITE_ImageBB} `
-            axios.post(imageApi,data)
+            const imageApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_ImageBB}`
+            axios.post(imageApi,formData)
             .then(res=>{
                 console.log("after image upload", res.data.data.url)})
 
-
+           const userprofile= {
+            displayName : data.name,
+            photoURL: res.data.data.url
+           }
 
         }).catch(error =>{
             console.log(error)

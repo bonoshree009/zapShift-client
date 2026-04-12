@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import axios from 'axios';
 
@@ -9,7 +9,9 @@ import axios from 'axios';
 
 const Register = () => {
     const {register,handleSubmit, formState :{errors} }=useForm()
-     const {registeruser} = useContext(AuthContext)
+     const {registeruser,updateuserprofile} = useContext(AuthContext)
+     const location =useLocation()
+     const navigate =useNavigate()
 
     const handleform =(data)=>{
         console.log(data, data.photo[0])
@@ -18,17 +20,28 @@ const Register = () => {
         registeruser(data.email ,data.password).then(res=> res.user)
         .then( result => {
             console.log(result.user)
+
+            //store image 
             const formData = new FormData()
             formData.append('image', profileImg)
+
+            //send the photo to store and get url
             const imageApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_ImageBB}`
+            
             axios.post(imageApi,formData)
             .then(res=>{
                 console.log("after image upload", res.data.data.url)})
 
+            // update profile to firebase
            const userprofile= {
             displayName : data.name,
             photoURL: res.data.data.url
            }
+
+           updateuserprofile(userprofile).then(()=>{
+            console.log("update done")
+            navigate(location.state || '/')
+           }).cathe(err => console.log(err))
 
         }).catch(error =>{
             console.log(error)
@@ -58,7 +71,7 @@ const Register = () => {
           </button>
           
         </fieldset>
-                <p>Already have an account?<Link to="/login" className='text-[#73863A] ml-3'>Login</Link></p>
+                <p>Already have an account?<Link  state={location.state} to="/login" className='text-[#73863A] ml-3'>Login</Link></p>
         
            </form>
            <SocialLogin></SocialLogin>

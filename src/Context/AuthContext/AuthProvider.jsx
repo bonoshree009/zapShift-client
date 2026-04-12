@@ -33,6 +33,10 @@ const [loading, setloading] = useState(true)
     }
 
 
+    const updateuserprofile =(profile)=>{
+return updateuserprofile(auth.currentUser, profile)
+    }
+
     useEffect(()=>{
 
         const unSubscribe = onAuthStateChanged(auth, (currentuser)=>{
@@ -48,7 +52,7 @@ const [loading, setloading] = useState(true)
 
      [])
 
-    const authinfo= { user, loading, registeruser,signInUser, googlelogin,logout}
+    const authinfo= { user, loading, registeruser,signInUser, googlelogin,logout, updateuserprofile}
     return (
         <AuthContext value={authinfo}> {children}
         </AuthContext>

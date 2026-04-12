@@ -47,7 +47,7 @@ const Navbar = () => {
      !user?<NavLink className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</NavLink> :
        <NavLink className="btn bg-red-700 ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register" onClick={handleLogout}>Log Out</NavLink>
       }
-   <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/BeARider">Be A Rider</NavLink>
+   <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/rider">Be A Rider</NavLink>
   </div>
 </div>
 </div>

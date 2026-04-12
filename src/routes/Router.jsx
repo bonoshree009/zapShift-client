@@ -7,6 +7,8 @@ import AboutUs from "../Pages/About/AboutUs";
 import AuthLayout from "../Layouts/AuthLayout";
 import Register from "../Pages/AuthPage/Register";
 import Login from "../Pages/AuthPage/Login.Jsx";
+import PrivateRoute from "./PrivateRoute";
+import Rider from "../Pages/Rider/Rider";
 
 
 export const router = createBrowserRouter([
@@ -15,6 +17,12 @@ export const router = createBrowserRouter([
     Component: RootLayout,
     children: [
       { index: true, Component: Home},
+
+      {path: 'rider',
+        element:<PrivateRoute><Rider></Rider></PrivateRoute>
+
+
+      },
       {path:'/covarage',
         Component:Covarage ,
         loader:()=> fetch('/warehouses.json').then(res => res.json()),

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Context/AuthContext/AuthContext';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 
 const Login = () => {
@@ -9,10 +9,13 @@ const Login = () => {
 
     const {register,handleSubmit, formState :{errors} }=useForm()
          const {signInUser} = useContext(AuthContext)
+         const location = useLocation()
+         const navigate =useNavigate()
     
         const handleform =(data)=>{
             console.log(data)
             signInUser(data.email ,data.password).then(res=> res.user)
+            navigate(Location?.state|| "/")
             .then( result => {console.log(result.user)}).catch(error =>{
                 console.log(error)
             })
@@ -33,7 +36,7 @@ const Login = () => {
           <button className="btn btn-neutral mt-4 bg-[#CAEB66] border-none text-[#73863A] font-bold text-2xl">Login</button>
           
         </fieldset>
-        <p>New in ZapShift <Link to="/register" className='text-[#73863A]'>Register</Link></p>
+        <p>New in ZapShift <Link  state={location.state}  to="/register" className='text-[#73863A]'>Register</Link></p>
            </form>
            <SocialLogin></SocialLogin>
 

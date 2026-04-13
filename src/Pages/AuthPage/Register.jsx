@@ -13,40 +13,44 @@ const Register = () => {
      const location =useLocation()
      const navigate =useNavigate()
 
-    const handleform =(data)=>{
-        console.log(data, data.photo[0])
-        const profileImg = data.phote[0]
+ const handleform = (data) => {
+    const profileImg = data.file[0];
 
-        registeruser(data.email ,data.password).then(res=> res.user)
-        .then( result => {
-            console.log(result.user)
+    registeruser(data.email, data.password)
+        .then((result) => {
+            const user = result.user;
+            console.log(user);
 
-            //store image 
-            const formData = new FormData()
-            formData.append('image', profileImg)
+            // image upload
+            const formData = new FormData();
+            formData.append('image', profileImg);
 
-            //send the photo to store and get url
-            const imageApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_ImageBB}`
-            
-            axios.post(imageApi,formData)
-            .then(res=>{
-                console.log("after image upload", res.data.data.url)})
+            const imageApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_ImageBB}`;
 
-            // update profile to firebase
-           const userprofile= {
-            displayName : data.name,
-            photoURL: res.data.data.url
-           }
+            axios.post(imageApi, formData)
+                .then(res => {
+                    const imageUrl = res.data.data.url;
+                    console.log("Image URL:", imageUrl);
 
-           updateuserprofile(userprofile).then(()=>{
-            console.log("update done")
-            navigate(location.state || '/')
-           }).cathe(err => console.log(err))
+                    // update profile
+                    const userprofile = {
+                        displayName: data.name,
+                        photoURL: imageUrl
+                    };
 
-        }).catch(error =>{
-            console.log(error)
+                    updateuserprofile(userprofile)
+                        .then(() => {
+                            console.log("Profile updated");
+                            navigate(location.state || '/');
+                        })
+                        .catch(err => console.log(err));
+                })
+                .catch(err => console.log("Image upload error:", err));
         })
-    }
+        .catch(error => {
+            console.log(error);
+        });
+};
     return (
         <div>
            <form onSubmit={handleSubmit(handleform)}>

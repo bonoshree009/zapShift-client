@@ -12,14 +12,30 @@ const Login = () => {
          const location = useLocation()
          const navigate =useNavigate()
     
-        const handleform =(data)=>{
-            console.log(data)
-            signInUser(data.email ,data.password).then(res=> res.user)
-            navigate(Location?.state|| "/")
-            .then( result => {console.log(result.user)}).catch(error =>{
-                console.log(error)
-            })
-        }
+        // const handleform =(data)=>{
+        //     console.log(data)
+        //     signInUser(data.email ,data.password).then(res=> res.user)
+        //     navigate(Location?.state || "/")
+        //     .then( result => {console.log(result.user)}).catch(error =>{
+        //         console.log(error)
+        //     })
+        // }
+
+
+        const handleform = (data) => {
+  console.log(data);
+
+  signInUser(data.email, data.password)
+    .then((result) => {
+      console.log(result.user);
+
+      // correct navigation
+      navigate(location?.state || "/");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
     return (
          <div>
            <form onSubmit={handleSubmit(handleform)}>

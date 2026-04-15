@@ -5,7 +5,10 @@ import { AuthContext } from '../../Context/AuthContext/AuthContext';
 
 const Navbar = () => {
 
-      const {user, logout}= useContext(AuthContext)
+      const {user, logout,loading}= useContext(AuthContext)
+      if (loading) {
+  return <span className="loading loading-bars loading-md"></span>;
+}
       
       const handleLogout =()=>{
         logout().then().catch()
@@ -45,8 +48,12 @@ const Navbar = () => {
 
      {
      !user?<NavLink className="btn text-[10px] p-1 md:p-3 md:text-[15px]" to="/login">Sign In</NavLink> :
-       <NavLink className="btn bg-red-700 ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/register" onClick={handleLogout}>Log Out</NavLink>
-      }
+<button 
+  className="btn bg-red-700 ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" 
+  onClick={handleLogout}
+>
+  Log Out
+</button>      }
    <NavLink className="btn bg-primary ml-3 font-bold text-[10px] p-1 md:p-3 md:text-[15px]" to="/rider">Be A Rider</NavLink>
   </div>
 </div>

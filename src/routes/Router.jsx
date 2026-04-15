@@ -9,6 +9,7 @@ import Register from "../Pages/AuthPage/Register";
 import Login from "../Pages/AuthPage/Login.Jsx";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../Pages/Rider/Rider";
+import SendPercle from "../Pages/SendPercle/SendPercle";
 
 
 export const router = createBrowserRouter([
@@ -20,8 +21,11 @@ export const router = createBrowserRouter([
 
       {path: 'rider',
         element:<PrivateRoute><Rider></Rider></PrivateRoute>
+      },
 
-
+      {
+        path: 'send-percle',
+        element:<PrivateRoute><SendPercle></SendPercle></PrivateRoute>
       },
       {path:'/covarage',
         Component:Covarage ,

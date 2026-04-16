@@ -25,7 +25,9 @@ export const router = createBrowserRouter([
 
       {
         path: 'send-percle',
-        element:<PrivateRoute><SendPercle></SendPercle></PrivateRoute>
+        element:<PrivateRoute><SendPercle></SendPercle></PrivateRoute>,
+        loader:()=> fetch('/warehouses.json').then(res => res.json()),
+
       },
       {path:'/covarage',
         Component:Covarage ,

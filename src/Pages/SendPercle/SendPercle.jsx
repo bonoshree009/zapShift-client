@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const SendParcle = () => {
 
@@ -23,10 +24,50 @@ const SendParcle = () => {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
+
+    const isDocument = data.parcelType === "Document";
+    const isSameDistrict = data.senderDistrict === data.receiverDistrict;
+
+    const parcelWeight = parseFloat(data.parcelWeight) || 0;
+
+    let cost = 0;
+
+    if (isDocument) {
+      cost = isSameDistrict ? 60 : 80;
+    } else {
+      if (parcelWeight < 3) {
+        cost = isSameDistrict ? 110 : 150;
+      } else {
+        const mincharge = isSameDistrict ? 110 : 150;
+        const extraWeight = parcelWeight - 3;
+        const extraCharge = isSameDistrict
+          ? extraWeight * 40
+          : extraWeight * 40 + 40;
+
+        cost = mincharge + extraCharge;
+      }
+    }
+
+    Swal.fire({
+  title: "Agree with the cost?",
+  text: `You will be chared ${cost}`,
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, I Agree!"
+}).then((result) => {
+  if (result.isConfirmed) Swal.fire({
+    title: "Agreed!",
+    text: "You have agreed to the cost.",
+    icon: "success"
+  });
+});
+
+    console.log("Calculated Cost:", cost);
   };
 
   const inputStyle = "w-full p-3 border border-gray-200 rounded-md outline-none focus:border-blue-400 transition-colors text-sm placeholder-gray-400";
-  //const labelStyle = "block text-sm font-semibold text-gray-700 mb-1";
   const sectionTitle = "text-lg font-bold text-teal-900 mb-4";
 
   return (
@@ -50,8 +91,17 @@ const SendParcle = () => {
 
         {/* Parcel Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <input placeholder="Parcel Name" className={inputStyle} {...register("parcelName", { required: true })} />
-          <input placeholder="Parcel Weight (KG)" className={inputStyle} {...register("parcelWeight", { required: true })} />
+          <input
+            placeholder="Parcel Name"
+            className={inputStyle}
+            {...register("parcelName", { required: true })}
+          />
+          <input
+            type="number"
+            placeholder="Parcel Weight (KG)"
+            className={inputStyle}
+            {...register("parcelWeight", { required: true })}
+          />
         </div>
 
         {/* Sender & Receiver */}
@@ -68,7 +118,9 @@ const SendParcle = () => {
             {/* Sender Region */}
             <select className={inputStyle} {...register("senderRegion")}>
               <option value="">Select Region</option>
-              {regions.map((r, i) => <option key={i} value={r}>{r}</option>)}
+              {regions.map((r, i) => (
+                <option key={i} value={r}>{r}</option>
+              ))}
             </select>
 
             {/* Sender District */}
@@ -79,7 +131,11 @@ const SendParcle = () => {
               ))}
             </select>
 
-            <textarea placeholder="Pickup Instruction" className={`${inputStyle} h-24`} {...register("pickupInstruction")} />
+            <textarea
+              placeholder="Pickup Instruction"
+              className={`${inputStyle} h-24`}
+              {...register("pickupInstruction")}
+            />
           </div>
 
           {/* Receiver */}
@@ -93,7 +149,9 @@ const SendParcle = () => {
             {/* Receiver Region */}
             <select className={inputStyle} {...register("receiverRegion")}>
               <option value="">Select Region</option>
-              {regions.map((r, i) => <option key={i} value={r}>{r}</option>)}
+              {regions.map((r, i) => (
+                <option key={i} value={r}>{r}</option>
+              ))}
             </select>
 
             {/* Receiver District */}
@@ -104,12 +162,19 @@ const SendParcle = () => {
               ))}
             </select>
 
-            <textarea placeholder="Delivery Instruction" className={`${inputStyle} h-24`} {...register("deliveryInstruction")} />
+            <textarea
+              placeholder="Delivery Instruction"
+              className={`${inputStyle} h-24`}
+              {...register("deliveryInstruction")}
+            />
           </div>
         </div>
 
         {/* Submit */}
-        <button type="submit" className="bg-[#D4ED6D] px-8 py-3 rounded-lg font-bold">
+        <button
+          type="submit"
+          className="bg-[#D4ED6D] px-8 py-3 rounded-lg font-bold"
+        >
           Confirm Booking
         </button>
 

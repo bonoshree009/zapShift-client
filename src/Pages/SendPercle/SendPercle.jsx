@@ -55,7 +55,7 @@ const SendParcle = () => {
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
   cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, I Agree!"
+  confirmButtonText: "Yes, I Agree"
 }).then((result) => {
   if (result.isConfirmed) Swal.fire({
     title: "Agreed!",

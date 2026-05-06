@@ -9,8 +9,9 @@ const SendParcle = () => {
   const serviceSenter = useLoaderData();
 
   // unique regions
+ // kkknn
   const regions = [...new Set(serviceSenter.map(item => item.region))];
-bonoshree
+
   // watch sender + receiver region
   const senderRegion = watch("senderRegion");
   const receiverRegion = watch("receiverRegion");
